@@ -1,0 +1,7 @@
+node_modules/*
+dep/*
+
+tmp/*
+test/*
+
+package-lock.json
