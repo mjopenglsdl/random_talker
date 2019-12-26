@@ -1,0 +1,4 @@
+cnpm install express --save
+cnpm install express-session --save
+cnpm install pug --save
+cnpm install random-seed --save
