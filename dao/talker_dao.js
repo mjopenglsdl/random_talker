@@ -14,7 +14,7 @@ class TalkerDao
                     id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name      CHAR(12)  NOT NULL,
                     datetime  DATETIME NOT NULL,
-                    talked    BOOLEAN  DEFAULT false
+                    talked    BOOLEAN  DEFAULT false,
                     next_talk BOOLEAN  DEFAULT false
                     )`
                     , (err)=>{
