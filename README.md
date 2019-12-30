@@ -9,7 +9,7 @@ A nodejs program which uses the RESTful API
 * **pug** Template Engine
 
 # Motivation
-Each member in our developer team have to tive a tech-talk each Wednesday. I decided to make **nodejs** program that keeps track of whom has talked, and whom has not talked. 
+Each member in our developer team have to give a tech-talk on every Wednesday. I decided to make a **nodejs** program that keeps track of whom has talked, and those people that has not talked.
 
 # Rules
 * Each member gives a talk on Wednesday
