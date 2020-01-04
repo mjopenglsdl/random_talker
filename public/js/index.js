@@ -7,10 +7,11 @@ $(document).ready(()=>{
             data: {id: id},
             dataType: "json",
             success: function(data, textStatus){
-                console.log("data: ", data);
+                console.log("!!! data: ", data);
                 if(true === data.success){
                     // reset
-                    console.log("deleted !!!");
+                    // console.log("deleted !!!");
+                    $("#tr_"+ data.data.id).remove();
                 }
             }
         });

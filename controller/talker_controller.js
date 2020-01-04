@@ -72,4 +72,16 @@ router.put("/", function(req, res){
 });
 
 
+router.delete("/", function(req, res){
+ 
+    let req_data = req.body;
+    console.log(" delete !!!   got talker data: ", req_data);
+
+    talker_dao.delOne(req_data.id, ()=>{
+        console.log("deleted !");
+        res.json({success: true, data: {id: req_data.id}});
+    });
+});
+
+
 module.exports = router;

@@ -1,5 +1,5 @@
 const db_manager = require('./db_manager');
-let Talker = require('../model/Talker');
+// let Talker = require('../model/Talker');
 
 class TalkerDao
 {
@@ -11,11 +11,11 @@ class TalkerDao
                 console.log("creating table cuz table not exist: " + this.TABLE_NAME);
                 db_manager.runSqlCmd(
                     `CREATE TABLE talker(
-                    id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
-                    name      CHAR(12)  NOT NULL,
-                    datetime  DATETIME NOT NULL,
-                    talked    BOOLEAN  DEFAULT false,
-                    next_talk BOOLEAN  DEFAULT false
+                        id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        name      CHAR(12)  NOT NULL,
+                        datetime  DATETIME NOT NULL,
+                        talked    BOOLEAN  DEFAULT false,
+                        next_talk BOOLEAN  DEFAULT false
                     )`
                     , (err)=>{
                         if(err){
@@ -40,6 +40,10 @@ class TalkerDao
                 self.getOne(ret_info.inserted_id, ret_cb);
             }
         }, this);
+    }
+
+    delOne(id, ret_cb){
+        db_manager.queryOneSqlCmd(`DELETE FROM talker WHERE id = ?`, [id] ,ret_cb);
     }
 
     getOne(id, ret_cb){
