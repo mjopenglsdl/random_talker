@@ -3,6 +3,7 @@
 const express = require('express');
 const session = require("express-session");
 const body_parser = require('body-parser');
+const conf_manager = require('./lib/conf_manager');
 
 // controllers
 const talker_controller = require('./controller/talker_controller');
@@ -33,13 +34,8 @@ app.use("/user", user_controller);
 
 // other
 app.get("/", function(req, res){
-    let b_logged_in = false;
-    if(true === req.session.logged_in){
-        // console.log("user logged in !");
-        b_logged_in = true;
-    }
+    let b_logged_in = conf_manager.getConf().debug ? true : req.session.logged_in;
     res.render("index", {logged_in: b_logged_in});
-    // res.render("index", {logged_in: true});
 });
 
 app.get("/login", function(req, res){

@@ -90,8 +90,8 @@ class DbManager
     }
 
 
-    destroy(){
-        console.log(" db destroy() !");
+    close(){
+        console.log(" db closed !");
         this.db.close();
     }
 }
@@ -100,7 +100,7 @@ class DbManager
 let db_mgr = new DbManager();
 
 process.on("SIGINT", ()=>{
-    db_mgr.destroy();
+    db_mgr.close();
     process.exit();
 });
 

@@ -32,7 +32,7 @@ Type the following command in console:
 
     node server.js
 
-# Screenshots
+# Screenshot
 ![admin_panel](https://raw.githubusercontent.com/mjopenglsdl/random_talker/master/doc/img/admin.png)
 
 # Contributor
