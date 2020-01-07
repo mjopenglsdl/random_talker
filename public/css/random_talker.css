@@ -1,0 +1,27 @@
+h1 {
+    font-size: 30px;
+    color: #000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center
+}
+
+
+h2 {
+    font-size: 25px;
+    color: #000;
+    padding-top: 10px;
+    text-align: center
+}
+
+#next_talker_name {
+    font-size: 16px;
+    color: rgb(247, 189, 0);
+    padding-top: 5px;
+    text-align: center;
+    border-style: solid;
+}
+
+#form{
+    padding-top: 20px;
+}

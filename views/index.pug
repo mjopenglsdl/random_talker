@@ -5,6 +5,9 @@ html
 
     body(ontouchstart)
         section(class="ui-container")
+            section(id="header")
+                h1(class="title") Talker List
+
             section(id="table")
                 table(class="ui-table ui-border-tb") 
                     thead
@@ -16,7 +19,7 @@ html
                     tbody(id="tbody")
             
             section(id="display")
-                h1 Next Talker
+                h2 Next Talker
                 p(class="ui-txt-highlight" id="next_talker_name")
 
             section(id="form")
