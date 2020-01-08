@@ -5,3 +5,6 @@ tmp/*
 test/*
 
 package-lock.json
+
+# ignore
+!.gitkeep

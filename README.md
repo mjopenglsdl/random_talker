@@ -7,6 +7,7 @@ A nodejs program which uses the RESTful API
 * Model View Controller
 * admin **session** control
 * **pug** Template Engine
+* Unit testing (**mocha**)
 
 # Motivation
 Each member in our developer team have to give a tech-talk on every Wednesday. I decided to make a **nodejs** program that keeps track of whom has talked, and those people that has not talked.
