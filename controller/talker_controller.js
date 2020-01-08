@@ -2,11 +2,14 @@ let express = require('express');
 let talker_dao = require('../dao/talker_dao');
 let global_dao = require('../dao/global_dao');
 let conf_manager = require('../lib/conf_manager');
+let log_manager = require('../lib/log_manager');
 
 let random_seed = require('random-seed');
 
 let router = express.Router();
 let rand_gen = random_seed.create(new Date().getMilliseconds());
+
+let lg_ = log_manager.getLogger("TALKER");
 
 
 router.post("/", function(req, res){
@@ -32,6 +35,10 @@ router.get("/", function(req, res){
             let b_logged_in = conf_manager.getConf().debug ? true : req.session.logged_in;
             res.json({success: true, logged_in:b_logged_in, data: ary_talker});
         }
+
+        // console.log("getLogger: ", lg_ );
+        // lg_.log_info(" ary_talker: ", ary_talker);
+        log_manager.log_cout_info("TALKER", " ary_talker: " + "111");
     });
 });
 

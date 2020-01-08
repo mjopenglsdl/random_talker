@@ -1,5 +1,12 @@
 #!/usr/local/bin/node
 
+/// set up logger first 
+let log_manager = require('./lib/log_manager');
+log_manager.addLogger("TALKER");
+// log_manager.addLogger("PARAM");
+log_manager.setup();
+
+
 const express = require('express');
 const session = require("express-session");
 const body_parser = require('body-parser');
