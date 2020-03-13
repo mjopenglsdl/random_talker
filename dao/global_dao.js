@@ -1,50 +1,59 @@
-const db_manager = require('./db_manager');
+let DaoBase = require('./dao_base');
 
-class GlobalDao
+
+class GlobalDao extends DaoBase
 {
     constructor(){
-        this.TABLE_NAME = "global";
-        db_manager.tableExist(this.TABLE_NAME, (has)=>{
-            if(!has){
-                db_manager.runSqlCmd(
-                    `CREATE TABLE global(
-                        name  CHAR(20) NOT NULL PRIMARY KEY,
-                        value VARCHAR(255)
-                    )`
-                    , (err)=>{
-                        if(err){
-                            console.log("err: " , err);
-                        }else{
-                            console.log("table created: " + this.TABLE_NAME);
-                        }
-                });
-            }
-        });   
+        super({db_name: "common", table_name: "global"});
+        
+        this.setupTable(`
+            id        INTEGER   PRIMARY KEY  AUTOINCREMENT,
+            name      CHAR(20)           NOT NULL,
+            value     VARCHAR(255)       NOT NULL
+        `); 
     }
 
-    updateVal(name, value, ret_cb){
-        db_manager.queryOneSqlCmd(`SELECT * FROM global WHERE name = ?`, [name], (err, one_item)=>{
+    // If Not Exist
+    updateNameValueINE(item, ret_cb){
+        super.getOneSqlCmd("WHERE name = ?", [name], (err, one_item)=>{
             if(err){
                 console.log("err: ", err);
+                throw err;
             }else{
                 if(one_item){
-                    // update
-                    db_manager.runSqlCmd(`UPDATE global SET value = ? WHERE name = ?`, [value, name], ret_cb);
-
+                    updateOneSqlCmd("SET value = ? WHERE name = ?", [item.value, item.name], ret_cb)
                 }else{
-                    // insert
-                    db_manager.runSqlCmd(`INSERT INTO global VALUES (?, ?)`, [name, value], ret_cb);
+                    insertOneSqlCmd("(name, value) VALUES (?, ?)", [item.name, item.value], ret_cb);
                 }
             }
         });
     }
 
-    getVal(name, ret_cb){
-        db_manager.queryOneSqlCmd(`SELECT * FROM global WHERE name = ?`, [name] ,ret_cb);
+    insertNameValueINE(item, ret_cb){
+        super.getOneSqlCmd("WHERE name = ?", [item.name], (err, one_item)=>{
+            if(err){
+                console.log("err: ", err);
+                throw err;
+            }else{
+                if(!one_item){
+                    super.insertOneSqlCmd("(name, value) VALUES (?, ?)", [item.name, item.value], ret_cb);
+                }else{
+                    ret_cb();
+                }
+            }
+        });
+    }
+
+    getValByName(name, ret_cb){
+        super.getOneSqlCmd("WHERE name = ?", [name] ,ret_cb)
     }
 
     delVal(name, ret_cb){
-        db_manager.queryOneSqlCmd(`DELETE FROM global WHERE name = ?`, [name] ,ret_cb);
+        super.delOneSqlCmd("WHERE name = ?", [name], ret_cb);
+    }
+
+    update(item, ret_cb){
+        super.updateOneSqlCmd("SET name=?, value=? WHERE name=?", [item.name, item.value], ret_cb);
     }
 }
 

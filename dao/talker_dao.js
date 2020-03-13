@@ -1,36 +1,22 @@
-const db_manager = require('./db_manager');
-// let Talker = require('../model/Talker');
+let DaoBase = require('./dao_base');
 
-class TalkerDao
+
+class TalkerDao extends DaoBase
 {
     constructor(){
-        this.TABLE_NAME = "talker";
-        db_manager.tableExist(this.TABLE_NAME, (has)=>{
-            console.log("has: ", has);
-            if(!has){
-                console.log("creating table cuz table not exist: " + this.TABLE_NAME);
-                db_manager.runSqlCmd(
-                    `CREATE TABLE talker(
-                        id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
-                        name      CHAR(12)  NOT NULL,
-                        datetime  DATETIME NOT NULL,
-                        talked    BOOLEAN  DEFAULT false,
-                        next_talk BOOLEAN  DEFAULT false
-                    )`
-                    , (err)=>{
-                        if(err){
-                            console.log("err: " , err);
-                        }else{
-                            console.log("table created: " + this.TABLE_NAME);
-                        }
-                    });
-            }
-        });   
+        super({db_name: "common", table_name: "talker"});
+
+        this.setupTable(`
+            id        INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+            name      CHAR(12)  NOT NULL,
+            datetime  DATETIME NOT NULL,
+            talked    BOOLEAN  DEFAULT false,
+            next_talk BOOLEAN  DEFAULT false
+        `);
     }
     
     insert(talker, ret_cb){
-        // console.log("qqqqqq talker: ", talker);
-        db_manager.runSqlCmd(`INSERT INTO talker (name, talked, datetime) VALUES (?, ?, (datetime('now', 'localtime')))`, [talker.name, talker.talked === 'true'], function(err, ret_info, self){
+        super.insertOneSqlCmd("(name, talked, datetime) VALUES (?, ?, (datetime('now', 'localtime')))", [talker.name, talker.talked === 'true'], function(err, ret_info, self){
             console.log("self: ", self);
             console.log("ret_info: ", ret_info);
             
@@ -43,15 +29,15 @@ class TalkerDao
     }
 
     delOne(id, ret_cb){
-        db_manager.queryOneSqlCmd(`DELETE FROM talker WHERE id = ?`, [id] ,ret_cb);
+        super.delOneSqlCmd("WHERE id = ?", [id], ret_cb);
     }
 
     getOne(id, ret_cb){
-        db_manager.queryOneSqlCmd(`SELECT * FROM talker WHERE id = ?`, [id] ,ret_cb);
+        super.getOneSqlCmd("WHERE id = ?", [id], ret_cb);
     }
 
     getAll(ret_cb){
-        db_manager.queryAllSqlCmd(`SELECT * FROM talker`, ret_cb);
+        super.getAllSqlCmd(ret_cb);
     }
 
     getAllUntalked(ret_cb){
@@ -59,11 +45,11 @@ class TalkerDao
     }
 
     updateUntalked(id, ret_cb){
-        db_manager.runSqlCmd(`UPDATE talker SET talked = '1' WHERE id = ?`, [id], ret_cb);
+        super.updateOneSqlCmd("SET talked = '1' WHERE id = ?", [id], ret_cb);
     }
 
     resetTalked(ret_cb){
-        db_manager.runSqlCmd(`UPDATE talker SET talked = '0'`, ret_cb);
+        super.updateOneSqlCmd("SET talked = '0'", ret_cb);
     }
 }
 
